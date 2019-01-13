@@ -1,0 +1,19 @@
+apply plugin: 'java'
+apply plugin: 'war'
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+  testImplementation group: 'org.jboss.arquillian', name: 'arquillian-bom', version: '1.4.0.Final', ext: 'pom'
+  testImplementation 'org.arquillian.container:arquillian-container-chameleon:1.0.0.Alpha3'
+  
+  testImplementation 'org.jboss.arquillian.junit:arquillian-junit-container:1.4.0.Final'
+  testImplementation 'junit:junit:4.12'
+  
+  providedCompile 'org.eclipse.persistence:org.eclipse.persistence.jpa:2.6.5'
+  providedCompile 'javax:javaee-api:7.0'
+  
+}
+

@@ -1,0 +1,16 @@
+apply plugin: 'java-library'
+apply plugin: 'groovy'
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+  testCompile 'org.spockframework:spock-core:1.1-groovy-2.4-rc-2'
+  testCompile( 'com.athaydes:spock-reports:1.4.0' ) {
+        transitive = false // this avoids affecting version of Groovy/Spock
+    }
+    // both needed by spock-reports 
+    testCompile 'org.slf4j:slf4j-simple:1.7.13'     
+ }
+

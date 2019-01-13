@@ -1,0 +1,15 @@
+{
+  "people":
+  [
+    {
+      "id": "1",
+      "firstname" : "sameer",
+      "lastname" : "veda"
+    },
+    {
+      "id": "2",
+      "firstname" : "jameel",
+      "lastname" : "ahmad"
+    }
+  ]
+}

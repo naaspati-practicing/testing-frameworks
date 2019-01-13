@@ -1,0 +1,192 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.sam</groupId>
+  <artifactId>01_arquillian-spock</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>jar</packaging>
+
+  <name>01_arquillian-spock</name>
+  <url>http://maven.apache.org</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <version.arquillian_core>1.1.11.Final</version.arquillian_core>
+    <!-- JBoss AS7 version to be unpacked -->
+    <version.jbossas_7>7.1.1.Final</version.jbossas_7>
+
+    <version.arq.container.glassfish>1.0.0.CR4</version.arq.container.glassfish>
+    <version.glassfish>3.1.2</version.glassfish>
+
+    <version.spock>0.7-groovy-2.0</version.spock>
+    <!-- It is important to have 2.1.4+ because older versions will not work. JAR is missing directory entries
+         and hence is omitted by Shrinkwrap. See http://jira.codehaus.org/browse/GROOVY-6158 for more details
+    -->
+    <version.groovy>2.1.8</version.groovy>
+    <version.gmaven>1.2</version.gmaven>
+
+    <!-- distribution management -->
+    <jboss.releases.repo.url>https://repository.jboss.org/nexus/service/local/staging/deploy/maven2/
+    </jboss.releases.repo.url>
+    <jboss.snapshots.repo.url>https://repository.jboss.org/nexus/content/repositories/snapshots/
+    </jboss.snapshots.repo.url>
+
+    <version.source.plugin>2.2.1</version.source.plugin>
+    <version.jar.plugin>2.4</version.jar.plugin>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <version.surefire>2.19.1</version.surefire>
+  </properties>
+
+  <dependencies>
+    <!-- https://mvnrepository.com/artifact/org.arquillian.container/arquillian-container-chameleon -->
+<dependency>
+    <groupId>org.arquillian.container</groupId>
+    <artifactId>arquillian-container-chameleon</artifactId>
+    <version>1.0.0.CR2</version>
+    <scope>test</scope>
+</dependency>
+
+<!-- https://mvnrepository.com/artifact/org.jboss.arquillian.spock/arquillian-spock-container -->
+<dependency>
+    <groupId>org.jboss.arquillian.spock</groupId>
+    <artifactId>arquillian-spock-container</artifactId>
+    <version>1.0.0.Beta3</version>
+    <scope>test</scope>
+</dependency>
+
+<dependency>
+      <groupId>javax</groupId>
+      <artifactId>javaee-api</artifactId>
+      <version>7.0</version>
+      <scope>provided</scope>
+    </dependency>
+    
+    <!-- https://mvnrepository.com/artifact/org.spockframework/spock-core -->
+<dependency>
+    <groupId>org.spockframework</groupId>
+    <artifactId>spock-core</artifactId>
+    <version>0.7-groovy-2.0</version>
+    <scope>test</scope>
+</dependency>
+    
+<!-- https://mvnrepository.com/artifact/org.codehaus.groovy/groovy-all -->
+<dependency>
+    <groupId>org.codehaus.groovy</groupId>
+    <artifactId>groovy-all</artifactId>
+    <version>2.1.5</version>
+    <scope>test</scope>
+</dependency>
+
+<!-- https://mvnrepository.com/artifact/org.jboss.arquillian/arquillian-bom -->
+<dependency>
+    <groupId>org.jboss.arquillian</groupId>
+    <artifactId>arquillian-bom</artifactId>
+    <version>1.4.0.Final</version>
+    <type>pom</type>
+</dependency>
+  </dependencies>
+  
+  
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.1</version>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>build-helper-maven-plugin</artifactId>
+        <version>1.7</version>
+        <executions>
+          <execution>
+            <id>add-source</id>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>add-source</goal>
+            </goals>
+            <configuration>
+              <sources>
+                <source>src/main/groovy</source>
+              </sources>
+            </configuration>
+          </execution>
+          <execution>
+            <id>add-test-source</id>
+            <phase>generate-test-sources</phase>
+            <goals>
+              <goal>add-test-source</goal>
+            </goals>
+            <configuration>
+              <sources>
+                <source>src/test/groovy</source>
+              </sources>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>${version.surefire}</version>
+        <configuration>
+          <includes>
+            <include>**/*Specification.java</include>
+          </includes>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.gmavenplus</groupId>
+        <artifactId>gmavenplus-plugin</artifactId>
+        <version>${version.gmaven}</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>addSources</goal>
+              <goal>addTestSources</goal>
+              <goal>generateStubs</goal>
+              <goal>compile</goal>
+              <goal>testGenerateStubs</goal>
+              <goal>testCompile</goal>
+              <goal>removeStubs</goal>
+              <goal>removeTestStubs</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>${version.jar.plugin}</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>test-jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <version>${version.source.plugin}</version>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <goals>
+              <goal>jar-no-fork</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-release-plugin</artifactId>
+        <configuration>
+          <autoVersionSubmodules>true</autoVersionSubmodules>
+          <pushChanges>false</pushChanges>
+          <localCheckout>true</localCheckout>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>
