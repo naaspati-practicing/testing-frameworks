@@ -1,8 +1,0 @@
-import java.util.logging.Logger;
-
-public class DisplayNameDemo {
-	private static final Logger LOGGER = Logger.getLogger(DisplayNameDemo.class.getName());
-	
-
-
-}

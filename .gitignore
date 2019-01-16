@@ -1,13 +1,9 @@
-/bin/
-/.gradle/
-
-/build/
 *.class
-
+yarn.lock
 *.jar
 
-/node_modules/
-yarn.lock
-/.recommenders/
-/.metadata/
+**/bin/
+**/build/
+**/node_modules/
+**/.recommenders/
 **/.metadata/

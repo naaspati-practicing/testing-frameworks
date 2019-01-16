@@ -1,4 +1,0 @@
-eclipse.preferences.version=1
-v2_1_005/COMMANDS_MODIFY=1bd62e22-cd93-4136-b643-1cbb9579c195|ConEmu|resourceTypeFileOrDirectory|false|${easyshell\:container_loc}|commandTokenizerSpacesAndQuotesSkip|"C\:\\Program Files\\ConEmu\\ConEmu64.exe" -here -dir "${easyshell\:container_loc}" -run {cmd} -cur_console\:n|\#
-v2_1_005/MENU=0|087f303d-cd28-4727-b984-7fef2928f377|true|menuNameTypeOpenHere|Open ${easyshell\:command_name} Here|none|1bd62e22-cd93-4136-b643-1cbb9579c195|\#1|ae0e5b6e-0b20-4c52-9708-ba7e317d1dee|true|menuNameTypeShowIn|Show in ${easyshell\:command_name}|none|ae0e5b6e-0b20-4c52-9708-ba7e317d1dee|\#2|33043fe3-1a5f-46d7-b94e-9a02ef204e7d|true|menuNameTypeCopyToClipboard|Copy ${easyshell\:command_name} to Clipboard|none|33043fe3-1a5f-46d7-b94e-9a02ef204e7d|\#
-v2_1_005/MIGRATED=true
