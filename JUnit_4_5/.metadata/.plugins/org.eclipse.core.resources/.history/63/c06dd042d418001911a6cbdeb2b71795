@@ -1,0 +1,17 @@
+import java.util.Properties;
+
+import org.junit.jupiter.api.parallel.Execution;
+import org.junit.jupiter.api.parallel.ExecutionMode;
+
+@Execution(ExecutionMode.CONCURRENT)
+public class ResourceLockDemo {
+
+	private Properties backup;
+
+	void backup() {
+		backup = new Properties();
+		backup.putAll(System.getProperties());
+	}
+
+}
+

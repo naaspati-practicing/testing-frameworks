@@ -1,0 +1,11 @@
+import static com.google.common.truth.Truth8.*;
+
+import java.util.OptionalInt;
+
+public class Main {
+	
+	public static void main(String[] args) {
+		assertThat(OptionalInt.of(1)).hasValue(1);
+	}
+
+}

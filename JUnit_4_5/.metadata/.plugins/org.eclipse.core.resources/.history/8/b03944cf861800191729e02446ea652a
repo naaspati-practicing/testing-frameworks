@@ -1,0 +1,13 @@
+import java.util.logging.Logger;
+
+import org.junit.jupiter.api.BeforeAll;
+
+public class StandardTests {
+	private static final Logger LOGGER = Logger.getLogger(StandardTests.class.getName());
+	
+	@BeforeAll
+	static void init() {
+		
+	}
+
+}

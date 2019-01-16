@@ -1,0 +1,7 @@
+import java.util.logging.Logger;
+
+public class RepeatedTestsDemo {
+	private static final Logger LOGGER = Logger.getLogger(RepeatedTestsDemo.class.getName());
+	
+
+}

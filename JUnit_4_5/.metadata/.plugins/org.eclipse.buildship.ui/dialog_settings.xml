@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="org.eclipse.buildship.ui.wizard.project.creation">
+		<item value="true" key="use_default_location"/>
+		<item value="D:\importents_are_here\eclipse_workplace\LEARNING\JUnit_5\00-junit_5_user_guiide-1" key="project_location"/>
+	</section>
+</section>

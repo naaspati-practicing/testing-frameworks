@@ -1,0 +1,44 @@
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+public class AssertionsDemo {
+	
+	class Person {
+		final String firstName, lastName;
+
+		public Person(String firstName, String lastName) {
+			this.firstName = firstName;
+			this.lastName = lastName;
+		}
+		public String getFirstName() {
+			return firstName;
+		}
+		public String getLastName() {
+			return lastName;
+		}
+	}
+	
+	@BeforeEach
+	void init() {
+		
+	}
+	
+	@Test
+	void standardAssertions() {
+		assertEquals(2, 2);
+        assertEquals(4, 4, "The optional assertion message is now the last parameter.");
+        assertTrue('a' < 'b', () -> String.join(" -- ", "Assertion messages can be lazily evaluated "," to avoid constructing complex messages unnecessarily."));
+	}
+	
+	@Test
+	void groupedAssertions() {
+		assertAll("person",
+				() -> assertEquals("John", "John"),
+	            () -> assertEquals("Doe", "Doe")
+				);
+	}
+	
+
+}

@@ -1,0 +1,9 @@
+import static com.google.common.truth.Truth8.*;
+
+public class GoogleTruthAssertionDemo {
+	
+	void assertWithGoogleTruth() {
+		assertThat(2+1);
+	}
+
+}

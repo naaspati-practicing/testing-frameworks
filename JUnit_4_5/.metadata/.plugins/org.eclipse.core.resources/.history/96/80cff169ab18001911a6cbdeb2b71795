@@ -1,0 +1,38 @@
+import java.util.Stack;
+import java.util.logging.Logger;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
+
+@DisplayName("a stack")
+public class NestedDemo {
+	private static final Logger LOGGER = Logger.getLogger(NestedDemo.class.getName());
+
+	Stack<Object> stack;
+
+    @Test
+    @DisplayName("is instantiated with new Stack()")
+    void isInstantiatedWithNew() {
+        new Stack<>();
+        LOGGER.info("void isInstantiatedWithNew() {}");
+    }
+    
+    @Nested
+    @DisplayName("when new")
+    class WhenNew {
+    	
+    	@BeforeEach
+    	void createNewStack() {
+    		
+    	}
+    }
+    
+    
+    
+    
+	
+	
+
+}

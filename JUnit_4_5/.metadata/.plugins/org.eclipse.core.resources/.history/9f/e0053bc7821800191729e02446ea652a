@@ -1,0 +1,14 @@
+repositories {
+    jcenter()
+}
+
+plugins {
+    id 'java-library'
+}
+
+ext.JUNIT_VERSION = '5.3.2'
+
+dependencies {
+  testImplementation 'org.junit:junit-bom:'+JUNIT_VERSION  
+ }
+
