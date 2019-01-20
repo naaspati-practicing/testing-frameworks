@@ -3,6 +3,7 @@ package squawker.jdbi;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.Instant;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
@@ -60,6 +61,15 @@ public interface DataStore {
 	@RegisterConstructorMapper(User.class)
 	User getUserByUsername(@Bind String username) ;
 	
+	@SqlUpdate("INSERT INTO FOLLOWINGS(follower, followee)  " + 
+			"SELECT er.id, ee.id FROM USERS er, USERS ee WHERE er.username = :er.username AND ee.username = :ee.username;")
+	void follow(@BindBean("er") User follower, @BindBean("ee") User followee); 
+
+	@SqlQuery("SELECT * FROM USERS WHERE id IN " + 
+			"(SELECT followee FROM followings where follower = (select id from users where username=:username))")
+	@RegisterConstructorMapper(User.class)
+	List<User> findFollowees(@BindBean User user);
+	
 	@SqlUpdate("INSERT INTO MESSAGES (posted_by, _text, posted_at) SELECT u.id, :text, :postedAt FROM USERS u where u.username = :postedBy.username")
 	void insert(@BindBean Message message);
 	
@@ -87,4 +97,13 @@ public interface DataStore {
 	@RegisterRowMapper(MessageMapper.class)
 	@SqlQuery("SELECT *, m.id as mid, u.id as uid FROM MESSAGES m LEFT JOIN USERS u ON m.posted_by = u.id  WHERE username = :username")
 	List<Message> postsBy(@BindBean User user) ;
+	
+	@RegisterRowMapper(MessageMapper.class)
+	@SqlQuery("SELECT *, m.id as mid, u.id as uid FROM MESSAGES m LEFT JOIN USERS u ON m.posted_by = u.id  "
+			+ "WHERE username = :username OR "
+			+ "uid IN(SELECT followee from FOLLOWING WHERE follower = (select id FROM USERS WHERE username = :username))")
+	Collection<Message> timeline(User user);
+	
+	@SqlQuery("SELECT COUNT(*) FROM <tablename>")
+	int rowCount(@Bind("tablename") String tablename) ;
 }

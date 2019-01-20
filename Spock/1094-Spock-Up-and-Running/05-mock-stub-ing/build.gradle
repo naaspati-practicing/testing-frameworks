@@ -3,8 +3,10 @@ plugins {
     id 'groovy'
 }
 
+description = '05-Interaction Testing'
+
 ext.TRUTH_VERSION = '0.42'
-description = 'Chapter 4. Managing Resources'
+// Chapter 4. Managing Resources
 
 dependencies {
   // excluding hamcrest, test throws java.lang.NoClassDefFoundError: org/junit/internal/AssumptionViolatedException
