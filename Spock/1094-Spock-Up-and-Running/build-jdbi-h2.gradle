@@ -1,0 +1,5 @@
+dependencies {
+  compile (*['jdbi3-core', 'jdbi3-sqlobject'].collect{"org.jdbi:$it:+"})  
+  testImplementation 'com.h2database:h2:1.4.197'
+}
+

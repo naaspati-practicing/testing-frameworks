@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS messages (
+  id INTEGER PRIMARY KEY AUTO_INCREMENT,
+  posted_by INTEGER REFERENCES users(id),
+  text VARCHAR(140),
+  posted_at TIMESTAMP
+)

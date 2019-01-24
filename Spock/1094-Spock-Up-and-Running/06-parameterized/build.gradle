@@ -3,33 +3,7 @@ plugins {
     id 'groovy'
 }
 
+apply from:'../build.gradle'
+apply from:'../build-jdbi-h2.gradle'
+
 description = '06-Parameterized Specifications'
-
-ext.TRUTH_VERSION = '0.42'
-// Chapter 4. Managing Resources
-
-dependencies {
-  // excluding hamcrest, test throws java.lang.NoClassDefFoundError: org/junit/internal/AssumptionViolatedException
-  // spock depends on junit
-  // junit depends on hamcrest
-  // :( 
-  testCompile ('org.spockframework:spock-core:1.2-groovy-2.5')
-  testCompile( 'com.athaydes:spock-reports:1.6.1' ) {
-        transitive = false // this avoids affecting version of Groovy/Spock
-  }
-   compile (*['jdbi3-core', 'jdbi3-sqlobject'].collect{"org.jdbi:$it:+"})  
-   testImplementation 'com.h2database:h2:1.4.197'
-   testCompile 'org.slf4j:slf4j-simple:1.7.13'
-   // testImplementation 'com.google.truth:truth:'+TRUTH_VERSION
-   // testImplementation 'com.google.truth.extensions:truth-java8-extension:'+TRUTH_VERSION
-}
-
-test {
-   systemProperty 'java.util.logging.config.file','test-logging.properties'
-   // to stop [Test Worker] config log
-   systemProperty 'org.slf4j.simpleLogger.log.com.athaydes.spockframework', 'warn'
-}
-
-repositories {
-    jcenter()
-}

@@ -1,0 +1,14 @@
+plugins {
+    id 'java-library'
+    id 'groovy'
+}
+
+apply from:'../build.gradle'
+
+description = '''
+CHAPTER 8 Advanced where: Blocks
+
+actual_project_name: primary-keys
+
+it verifies that, tables defined  in database has primary key column 
+'''

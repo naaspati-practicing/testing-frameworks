@@ -3,28 +3,4 @@ plugins {
     id 'groovy'
 }
 
-ext.TRUTH_VERSION = '0.42'
-
-dependencies {
-  // excluding hamcrest, test throws java.lang.NoClassDefFoundError: org/junit/internal/AssumptionViolatedException
-  // spock depends on junit
-  // junit depends on hamcrest
-  // :( 
-  testCompile ('org.spockframework:spock-core:1.2-groovy-2.5')
-  testCompile( 'com.athaydes:spock-reports:1.6.1' ) {
-        transitive = false // this avoids affecting version of Groovy/Spock
-  }
-    
-   testCompile 'org.slf4j:slf4j-simple:1.7.13'
-   // testImplementation 'com.google.truth:truth:'+TRUTH_VERSION
-   // testImplementation 'com.google.truth.extensions:truth-java8-extension:'+TRUTH_VERSION
-}
-
-test {
-   // to stop [Test Worker] config log
-   systemProperty 'org.slf4j.simpleLogger.log.com.athaydes.spockframework', 'warn'
-}
-
-repositories {
-    jcenter()
-}
+apply from:'../build.gradle'

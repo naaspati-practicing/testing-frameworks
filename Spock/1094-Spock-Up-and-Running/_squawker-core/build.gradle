@@ -1,0 +1,8 @@
+plugins {
+    id 'java-library'
+    id 'groovy'
+}
+
+
+apply from:'../build.gradle'
+apply from:'../build-jdbi-h2.gradle'
