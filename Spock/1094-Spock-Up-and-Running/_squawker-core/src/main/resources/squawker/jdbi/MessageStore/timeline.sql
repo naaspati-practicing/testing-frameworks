@@ -1,5 +1,4 @@
-SELECT m.*, u.*, m.id as mid, u.id as uid FROM Messages m LEFT JOIN users u ON m.posted_by = u.id 
-  WHERE u.username = :u.username OR u.id IN
-    (SELECT followee_id FROM followings WHERE follower_id = 
-      (SELECT id FROM users WHERE username=:u.username)
-    )
+SELECT * FROM messages WHERE 
+  posted_by=(select id as user_id FROM users where username=:username) OR 
+  posted_by IN(select followee_id from followings where follwer_id=user_id)  
+);

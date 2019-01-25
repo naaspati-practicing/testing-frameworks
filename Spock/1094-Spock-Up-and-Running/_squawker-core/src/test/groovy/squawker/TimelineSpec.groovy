@@ -15,16 +15,13 @@
  */
 package squawker
 
-import java.time.Clock
 import java.time.Instant
+
 import spock.lang.Shared
 import spock.lang.Subject
 import squawker.jdbi.BasePersistenceSpec
 import squawker.jdbi.FollowingStore
 import squawker.jdbi.MessageStore
-import static java.time.Instant.now
-import static java.time.ZoneOffset.UTC
-import static java.time.temporal.ChronoUnit.MINUTES
 
 class TimelineSpec extends BasePersistenceSpec {
 

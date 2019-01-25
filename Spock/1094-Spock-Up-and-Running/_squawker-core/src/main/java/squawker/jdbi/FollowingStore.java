@@ -24,13 +24,9 @@ public interface FollowingStore extends SqlObject {
 			) ;
 	
 	@SqlQuery
-	@RegisterConstructorMapper(User.class)
 	List<User> findFollowees(@BindBean User follower) ;
 	
 	@SqlQuery
-	@RegisterConstructorMapper(User.class)
 	List<User> findFollowers(@BindBean User followee) ;
-	
-	
 
 }

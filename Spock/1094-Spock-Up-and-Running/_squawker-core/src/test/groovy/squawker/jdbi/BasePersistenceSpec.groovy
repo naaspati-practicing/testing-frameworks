@@ -1,14 +1,9 @@
 package squawker.jdbi
 
-import java.sql.SQLException
-import java.util.logging.Level
 import java.util.logging.Logger
 
 import org.jdbi.v3.core.Handle
 import org.jdbi.v3.core.Jdbi
-import org.jdbi.v3.core.statement.SqlLogger
-import org.jdbi.v3.core.statement.StatementContext
-import org.jdbi.v3.sqlobject.SqlObjectPlugin
 
 import spock.lang.Shared
 import spock.lang.Specification
@@ -23,7 +18,8 @@ abstract class BasePersistenceSpec extends Specification {
 
 	def setupSpec() {
 		assert jdbi == null
-		jdbi = init()
+		jdbi = JdbiInit.init("jdbc:h2:mem:test;DB_CLOSE_DELAY=-1", Logger.getLogger("SQL"))
+		beforeHandleOpen();
 		handle = jdbi.open()
 		userStore = handle.attach(UserStore)
 		userStore.createTable()
@@ -31,22 +27,8 @@ abstract class BasePersistenceSpec extends Specification {
 		logger.fine "jdbi init"
 	}
 	
-	private Jdbi init() {
-		Logger logger = Logger.getLogger("SQL");
-		Jdbi jdbi = Jdbi.create("jdbc:h2:mem:test;DB_CLOSE_DELAY=-1");
-		jdbi.installPlugin(new SqlObjectPlugin());
-
-		jdbi.sqlLogger = new SqlLogger() {
-			@Override
-			public void logAfterExecution(StatementContext context) {
-				logger.fine(context.parsedSql.sql);
-			}
-			@Override
-			public void logException(StatementContext context, SQLException ex) {
-				logger.log(Level.SEVERE, context.parsedSql.sql, ex);
-			}
-		}
-		return jdbi;
+	protected void beforeHandleOpen() {
+		
 	}
 	
 	def cleanup() {

@@ -15,11 +15,7 @@
  */
 package squawker
 
-import java.time.Clock
 import spock.lang.Specification
-import squawker.time.*
-import static java.time.Instant.now
-import static java.time.ZoneOffset.UTC
 
 class MessageSpec extends Specification {
 

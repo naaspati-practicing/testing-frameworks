@@ -1,5 +1,9 @@
 package squawker;
 
+import static java.util.Collections.unmodifiableList;
+import static java.util.Collections.unmodifiableSet;
+import static java.util.Objects.requireNonNull;
+
 import java.io.Serializable;
 import java.lang.ref.WeakReference;
 import java.time.Instant;
@@ -11,13 +15,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
-import static java.util.Collections.*;
-import static java.util.Objects.*;
-
-import java.beans.ConstructorProperties;
 
 public class User {
-	private static int mod = 0;
+	protected static int mod = 0;
 	
 	protected final Serializable id;
 	private final String username;
@@ -32,10 +32,6 @@ public class User {
 		this(UUID.randomUUID(), username, registered);
 	}
 	
-	@ConstructorProperties({"id", "username", "registered"})
-	public User(int id, String username, Instant registered) {
-		this(Integer.valueOf(id), username, registered);
-	}
 	public User(Serializable id, String username, Instant registered) {
 		this.id = requireNonNull(id);
 		this.username = requireNonNull(username);
@@ -122,7 +118,7 @@ public class User {
 			return true;
 		if (obj == null)
 			return false;
-		if (getClass() != obj.getClass())
+		if (!(obj instanceof User))
 			return false;
 		
 		User other = (User) obj;

@@ -8,70 +8,78 @@ import squawker.User
 
 class MessageStoreSpec extends BasePersistenceSpec {
 
-  @Subject 
-  @Shared 
-  MessageStore messageStore
-  def kirk = kirk()
-  def spock = spark()
+	@Subject
+	@Shared
+	MessageStore messageStore
+	def kirk = kirk()
+	def spock = spark()
+	
+	PersistentUserCache cache = new PersistentUserCache()
 
-  def setupSpec() {
-    messageStore = handle.attach(MessageStore)
-    messageStore.createTable()
-  }
+	@Override
+	protected void beforeHandleOpen() {
+		JdbiInit.registerPersistentUserMapper(jdbi, {-> null}, { -> messageStore})
+		JdbiInit.registerMessageMapper(jdbi, {-> userStore}, {-> cache})
+	}	
 
-  def cleanupSpec() {
-    handle.execute("drop table messages if exists")
-  }
+	def setupSpec() {
+		messageStore = handle.attach(MessageStore)
+		messageStore.createTable()
+	}
 
-  def setup() {
-    [kirk, spock].each { userStore.insert(it.username) }
-  }
+	def cleanupSpec() {
+		handle.execute("drop table messages if exists")
+	}
 
-  def cleanup() {
-    handle.execute("delete from messages")
-  }
+	def setup() {
+		[kirk, spock].each { userStore.insert(it.username) }
+	}
 
-  def "can retrieve a list of messages posted by a user"() {
-    given:
-    insertMessage(kirk, "@khan KHAAANNN!")
-    insertMessage(spock, "Fascinating!")
-    insertMessage(spock, "@kirk That is illogical, Captain.")
+	def cleanup() {
+		handle.execute("delete from messages")
+	}
 
-    when:
-    def posts = messageStore.postsBy(spock)
+	def "can retrieve a list of messages posted by a user"() {
+		given:
+		insertMessage(kirk, "@khan KHAAANNN!")
+		insertMessage(spock, "Fascinating!")
+		insertMessage(spock, "@kirk That is illogical, Captain.")
 
-    then:
-	posts*.postedBy == [spock, spock]
-  }
+		when:
+		def posts = messageStore.postsBy(spock)
 
-  def "can insert a message"() {
-    given:
-    def instant = Instant.now()
+		then:
+		posts*.postedBy == [spock, spock]
+	}
 
-    when:
-    def message = messageStore.insert(spock, "@bones I was merely stating a fact, Doctor.", instant)
+	def "can insert a message"() {
+		given:
+		def instant = Instant.now()
 
-    then:
-    def map = handle.createQuery('''select u.username, m.text, m.posted_at
+		when:
+		def message = messageStore.insert(spock, "@bones I was merely stating a fact, Doctor.", instant)
+
+		then:
+		def map = handle.createQuery('''select u.username, m.text, m.posted_at
                                          from messages m, users u
                                          where m.posted_by = u.id''')
-										 .mapToMap()
-										 .findOnly()
-	
-    then:
-    map.text == message.text
-    map.username == message.postedBy.username
-    map.posted_at.time == instant.toEpochMilli()
+				.mapToMap()
+				.findOnly()
 
-  }
+		then:
+		map.text == message.text
+		map.username == message.postedBy.username
+		map.posted_at.time == instant.toEpochMilli()
 
-  private void insertMessage(User postedBy, String text) {
-    handle.createUpdate('''insert into messages
+	}
+
+	private void insertMessage(User postedBy, String text) {
+		handle.createUpdate('''insert into messages
                               (posted_by, text, posted_at)
                               select id, ?, ? from users where username = ?''')
-          .bind(0, text)
-          .bind(1, Instant.now())
-          .bind(2, postedBy.username)
-          .execute()
-  }
+				.bind(0, text)
+				.bind(1, Instant.now())
+				.bind(2, postedBy.username)
+				.execute()
+	}
 }

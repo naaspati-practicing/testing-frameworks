@@ -16,7 +16,6 @@
 package squawker
 
 import spock.lang.Specification
-import static java.time.Instant.now
 
 class MessagePostingSpec extends Specification {
 

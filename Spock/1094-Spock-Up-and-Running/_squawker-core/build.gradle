@@ -6,3 +6,21 @@ plugins {
 
 apply from:'../build.gradle'
 apply from:'../build-jdbi-h2.gradle'
+
+
+/*
+ * Allow other sub-projects to depend on tests
+ */
+task jarTest(type: Jar) {
+  from sourceSets.test.output
+  classifier = 'test'
+}
+
+configurations {
+  testOutput
+}
+
+artifacts {
+  testOutput jarTest
+}
+

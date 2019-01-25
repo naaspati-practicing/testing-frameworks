@@ -4,6 +4,7 @@ plugins {
 }
 
 apply from:'../build.gradle'
+apply from:'../build-jdbi-h2.gradle'
 
 description = '''
 CHAPTER 8 Advanced where: Blocks
@@ -12,3 +13,8 @@ actual_project_name: primary-keys
 
 it verifies that, tables defined  in database has primary key column 
 '''
+
+dependencies {
+  compile project(':_squawker-core')
+  testCompile project(path: ":_squawker-core", configuration: "testOutput")
+}
